@@ -25,7 +25,7 @@ class ParseController extends Controller
                     $quotes->ticker_id = $tickers[$data->c]['id'];
                     $quotes->bbp = $data->bbp;
                     $quotes->bap = $data->bap;
-                    $quotes->ltt = $data->ltt;
+                    $quotes->ltt = str_replace('T', ' ', $data->ltt);
                     $quotes->created_at = (new Expression('NOW()'));
                     $quotes->getSpred();
                     if($quotes->save()){

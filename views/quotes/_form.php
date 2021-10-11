@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ticker_id')->textInput() ?>
+    <?= $form->field($model, 'ticker_id')->dropDownList(\yii\helpers\ArrayHelper::map($tickers, 'id', 'short_name')) ?>
 
     <?= $form->field($model, 'bbp')->textInput() ?>
 

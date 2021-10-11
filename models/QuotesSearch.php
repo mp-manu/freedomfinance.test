@@ -41,7 +41,7 @@ class QuotesSearch extends Quotes
      */
     public function search($params)
     {
-        $query = Quotes::find();
+        $query = Quotes::find()->with('ticker');
 
         // add conditions that should always apply here
 
@@ -64,11 +64,22 @@ class QuotesSearch extends Quotes
             'bbp' => $this->bbp,
             'bap' => $this->bap,
             'spred' => $this->spred,
-            'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'ltt', $this->ltt]);
+        if(!empty($this->created_at)){
+            $dates = explode(' - ', $this->created_at);
+            $query->andFilterWhere(['between',
+                'created_at', $dates[0], $dates[1]
+            ]);
+        }
+
+        if(!empty($this->ltt)){
+            $dates = explode(' - ', $this->ltt);
+            $query->andFilterWhere(['between',
+                'ltt', $dates[0], $dates[1]
+            ]);
+        }
 
         return $dataProvider;
     }

@@ -1,8 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-
+use kartik\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\QuotesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,15 +23,35 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
+            //['class' => 'yii\grid\SerialColumn'],
             'id',
-            'ticker_id',
+            [
+                'attribute' => 'ticker_id',
+                'value' => function ($model) {
+                    return $model->ticker->short_name;
+                },
+                'filter' => $tickersFilter
+            ],
             'bbp',
             'bap',
             'spred',
-            'ltt',
-            //'created_at',
+            [
+                'attribute' => 'ltt',
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => [
+                    'convertFormat'=>true,
+                    'language' => 'ru',
+                    'pluginOptions' => [
+                        'opens'=>'right',
+                        'locale' => [
+                            'cancelLabel' => 'Закрыть',
+                            'applyLabel' => 'Поиск',
+                            'format' => 'Y-m-d',
+                        ]
+                    ]
+                ],
+            ],
+            'created_at',
             //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

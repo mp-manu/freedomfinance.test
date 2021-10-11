@@ -21,6 +21,11 @@ class m211008_101052_create_tickers_table extends Migration
             'currency' => $this->string('25'),
             'min_step' => $this->float('4,2')
         ]);
+
+        $this->createIndex('idx_unique_short_name',
+            '{{%tickers}}',
+            ['short_name'],
+            true);
     }
 
     /**

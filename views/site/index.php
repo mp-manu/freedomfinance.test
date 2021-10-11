@@ -11,5 +11,9 @@ $this->title = 'Добро пожаловать в '. Yii::$app->name;
     </div>
 
     <div class="body-content">
+        <p>//Чтобы запустить парсинг коректировок в фоне, запустите консольную команду:</p>
+        <code>
+            yii parse
+        </code>
     </div>
 </div>

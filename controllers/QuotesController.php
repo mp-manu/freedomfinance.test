@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\Quotes;
 use app\models\QuotesSearch;
+use app\models\Tickers;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -39,10 +41,11 @@ class QuotesController extends Controller
     {
         $searchModel = new QuotesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $tickersFilter = ArrayHelper::map(Tickers::find()->asArray()->all(), 'id', 'short_name');
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'tickersFilter' => $tickersFilter
         ]);
     }
 
@@ -67,6 +70,7 @@ class QuotesController extends Controller
     public function actionCreate()
     {
         $model = new Quotes();
+        $tickers = Tickers::find()->asArray()->all();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -78,6 +82,7 @@ class QuotesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'tickers' => $tickers
         ]);
     }
 
@@ -91,13 +96,16 @@ class QuotesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $tickers = Tickers::find()->asArray()->all();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+
         return $this->render('update', [
             'model' => $model,
+            'tickers' => $tickers
         ]);
     }
 

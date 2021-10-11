@@ -18,7 +18,7 @@ class m211010_155153_create_quotes_table extends Migration
             'bbp' => $this->double('2')->notNull(),
             'bap' => $this->double('2')->notNull(),
             'spred' => $this->double('2')->notNull(),
-            'ltt' => $this->string(),
+            'ltt' => $this->dateTime(),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime()
         ]);
